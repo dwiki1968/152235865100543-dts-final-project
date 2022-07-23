@@ -1,11 +1,14 @@
-import { Button, Container, Typography } from "@mui/material";
+import { Container } from "@mui/material";
 import React from "react";
+import FoodList from "../components/FoodList";
+import HeroBanner from "../components/HeroBanner";
 
 const HomePage = () => {
   return (
     <>
       <Container maxWidth="xl">
-        <Typography> Ini adalah halaman home</Typography>
+        <HeroBanner />
+        <FoodList />
       </Container>
     </>
   );

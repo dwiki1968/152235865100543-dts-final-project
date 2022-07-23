@@ -9,6 +9,7 @@ const Footer = () => {
       <Container
         sx={{
           paddingY: 2,
+          marginTop: 10,
         }}
         maxWidth="xl"
       >

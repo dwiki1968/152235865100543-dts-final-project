@@ -1,0 +1,59 @@
+import { Restaurant, Timer } from "@mui/icons-material";
+import {
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  Chip,
+  Stack,
+  Typography,
+} from "@mui/material";
+import React from "react";
+
+const FoodCard = ({ data }) => {
+  const { title, portion, times, key, thumb } = data;
+  return (
+    <>
+      <Card
+        sx={{
+          maxWidth: "350px",
+
+          boxShadow: "none",
+          background:
+            "linear-gradient(180deg, rgba(231, 249, 253, 0) 0%, #E7F9FD 100%)",
+          borderRadius: "30px",
+          marginBottom: 2,
+        }}
+      >
+        <CardActionArea
+          sx={{
+            padding: 2,
+            borderRadius: "30px",
+          }}
+        >
+          <CardMedia
+            sx={{
+              borderRadius: "30px",
+            }}
+            component="img"
+            height="225px"
+            image={thumb}
+            alt="resep-iga-bakar-a-la-makassar"
+          />
+
+          <CardContent>
+            <Typography gutterBottom variant="h6" fontWeight={600}>
+              {title.replace("Resep", "")}
+            </Typography>
+            <Stack direction="row" spacing={2}>
+              <Chip size="small" icon={<Timer />} label={times} />
+              <Chip size="small" icon={<Restaurant />} label={portion} />
+            </Stack>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+    </>
+  );
+};
+
+export default FoodCard;
