@@ -1,10 +1,12 @@
-import { Button } from "@mui/material";
+import { Button, Container, Typography } from "@mui/material";
 import React from "react";
 
 const HomePage = () => {
   return (
     <>
-      <Button variant="contained"> Tes</Button>
+      <Container maxWidth="xl">
+        <Typography> Ini adalah halaman home</Typography>
+      </Container>
     </>
   );
 };

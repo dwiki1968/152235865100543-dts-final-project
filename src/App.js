@@ -5,6 +5,7 @@ import theme from "./utils/theme";
 import HomePage from "./containers/HomePage";
 import SignIn from "./containers/SignIn";
 import SignUp from "./containers/SignUp";
+import Layout from "./components/Layout";
 
 function App() {
   return (
@@ -13,7 +14,14 @@ function App() {
         <CssBaseline />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route
+              path="/"
+              element={
+                <Layout>
+                  <HomePage />
+                </Layout>
+              }
+            />
             <Route path="signup" element={<SignUp />} />
             <Route path="login" element={<SignIn />} />
             <Route path="/recipes/:recipeId" element={<>detail</>} />
