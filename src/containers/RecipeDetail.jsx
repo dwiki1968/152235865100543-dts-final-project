@@ -1,17 +1,23 @@
 import { useParams } from "react-router-dom";
 
 import {
+  Avatar,
   Box,
   Card,
   CardMedia,
   Container,
   Divider,
+  Grid,
   Stack,
   Typography,
 } from "@mui/material";
 import React from "react";
 import Loading from "../components/Loading";
 import { useAxios } from "../hooks/axioshook";
+import Info from "../components/Info";
+import { Restaurant, Timer } from "@mui/icons-material";
+import ListForDetailRecipe from "../components/ListForDetailRecipe";
+import OtherRecipes from "../components/OtherRecipes";
 
 const RecipeDetail = () => {
   let { recipeId } = useParams();
@@ -41,47 +47,59 @@ const RecipeDetail = () => {
       }}
     >
       <Stack spacing={5}>
+        {/* Judul Resep */}
         <Typography variant="h3" fontWeight={600}>
           {title}
         </Typography>
+
+        {/* Sekilas Info */}
         <Stack
           direction="row"
           divider={<Divider orientation="vertical" flexItem />}
           spacing={5}
         >
-          <Box>
-            <Typography fontWeight="700">{author.user}</Typography>
-            <Typography fontWeight="500">{author.datePublished}</Typography>
-          </Box>
+          <Info
+            icon={<Avatar alt={author.user} src="https://i.pravatar.cc/100" />}
+            title={author.user}
+            content={author.datePublished}
+          />
 
-          <Box>
-            <Typography fontWeight="700">Cook Time</Typography>
-            <Typography fontWeight="500">{times}</Typography>
-          </Box>
-
-          <Box>
-            <Typography fontWeight="700">Portion</Typography>
-            <Typography fontWeight="500">{servings}</Typography>
-          </Box>
+          <Info icon={<Timer />} title="Cook Time" content={times} />
+          <Info icon={<Restaurant />} title="Portion" content={servings} />
         </Stack>
 
-        <Card
-          sx={{
-            maxWidth: "600px",
-            boxShadow: "none",
-            borderRadius: "30px",
-          }}
-        >
-          <CardMedia
-            sx={{
-              borderRadius: "30px",
-            }}
-            component="img"
-            image={thumb}
-            alt="resep-sate-kambing-bumbu-kacang-kurma"
-          />
-        </Card>
-        {/* <Card maxWidth="400px"></Card> */}
+        {/* Thumb  */}
+        <Grid container>
+          <Grid item xs={8}>
+            <Card
+              sx={{
+                // maxWidth: "600px",
+                boxShadow: "none",
+                borderRadius: "30px",
+                paddingRight: 5,
+              }}
+            >
+              <CardMedia
+                sx={{
+                  borderRadius: "30px",
+                }}
+                component="img"
+                image={thumb}
+                alt="resep-sate-kambing-bumbu-kacang-kurma"
+              />
+            </Card>
+          </Grid>
+          <Grid item xs={4}>
+            <Card
+              sx={{
+                background: "#E7FAFE",
+                height: "100%",
+                borderRadius: "30px",
+                boxShadow: "none",
+              }}
+            ></Card>
+          </Grid>
+        </Grid>
 
         <Box>
           <Typography
@@ -94,44 +112,59 @@ const RecipeDetail = () => {
           </Typography>
         </Box>
 
-        <Box>
-          <Typography fontWeight={600} variant="h4">
-            ingredient
-          </Typography>
-          <Stack>
-            {ingredient.map((item, index) => (
-              <Typography
-                key={index}
-                variant="body"
-                fontWeight={400}
-                fontSize="16px"
-                lineHeight="28px"
-              >
-                {item}
-              </Typography>
-            ))}
-          </Stack>
-        </Box>
+        {/* Bahan  */}
+        <Grid container>
+          <Grid item xs={8}>
+            <Box
+              sx={{
+                paddingRight: 5,
+              }}
+            >
+              <Box>
+                <Typography
+                  fontWeight={600}
+                  variant="h4"
+                  sx={{
+                    marginBottom: 2,
+                  }}
+                >
+                  ingredient
+                </Typography>
+                <ListForDetailRecipe data={ingredient} />
+              </Box>
 
-        <Box>
-          <Typography fontWeight={600} variant="h4">
-            Directions
-          </Typography>
-
-          <Stack>
-            {step.map((item, index) => (
-              <Typography
-                key={index}
-                variant="body"
-                fontWeight={400}
-                fontSize="16px"
-                lineHeight="28px"
+              {/* Langkah */}
+              <Box
+                sx={{
+                  marginTop: 5,
+                }}
               >
-                {item}
-              </Typography>
-            ))}
-          </Stack>
-        </Box>
+                <Typography
+                  fontWeight={600}
+                  variant="h4"
+                  sx={{
+                    marginBottom: 2,
+                  }}
+                >
+                  Directions
+                </Typography>
+                <ListForDetailRecipe data={step} />
+              </Box>
+            </Box>
+          </Grid>
+          <Grid item xs={4}>
+            <Typography
+              fontWeight={600}
+              variant="h4"
+              sx={{
+                marginBottom: 3,
+              }}
+            >
+              Other Recipe
+            </Typography>
+            <OtherRecipes />
+          </Grid>
+        </Grid>
       </Stack>
     </Container>
   );
