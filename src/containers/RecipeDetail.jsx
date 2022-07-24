@@ -21,10 +21,8 @@ import OtherRecipes from "../components/OtherRecipes";
 
 const RecipeDetail = () => {
   let { recipeId } = useParams();
-  const { response, loading, error } = useAxios({
-    method: "GET",
-    url: `/recipe/${recipeId}`,
-  });
+  console.log(recipeId);
+  const { response, loading, error } = useAxios(`/recipe/${recipeId}`);
 
   if (loading) {
     return (
@@ -128,7 +126,7 @@ const RecipeDetail = () => {
                     marginBottom: 2,
                   }}
                 >
-                  ingredient
+                  Ingredient
                 </Typography>
                 <ListForDetailRecipe data={ingredient} />
               </Box>

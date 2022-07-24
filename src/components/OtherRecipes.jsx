@@ -14,10 +14,7 @@ import { useAxios } from "../hooks/axioshook";
 import Loading from "./Loading";
 
 const OtherRecipes = () => {
-  const { response, loading, error } = useAxios({
-    method: "GET",
-    url: `/recipes-length/?limit=3`,
-  });
+  const { response, loading, error } = useAxios(`/recipes-length/?limit=3`);
   const navigate = useNavigate();
 
   if (loading) {
