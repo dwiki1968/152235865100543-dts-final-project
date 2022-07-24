@@ -11,7 +11,6 @@ const Footer = () => {
           paddingY: 2,
           marginTop: 10,
         }}
-        maxWidth="xl"
       >
         <Stack spacing={2}>
           <Stack spacing={2} direction="row" alignItems="center">

@@ -6,7 +6,7 @@ import HeroBanner from "../components/HeroBanner";
 const HomePage = () => {
   return (
     <>
-      <Container maxWidth="xl">
+      <Container>
         <HeroBanner />
         <FoodList />
       </Container>

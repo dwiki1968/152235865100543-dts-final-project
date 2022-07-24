@@ -9,8 +9,11 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const FoodCard = ({ data }) => {
+  const navigate = useNavigate();
+
   const { title, portion, times, key, thumb } = data;
   return (
     <>
@@ -26,6 +29,9 @@ const FoodCard = ({ data }) => {
         }}
       >
         <CardActionArea
+          onClick={() => {
+            navigate(`/recipes/${key}`);
+          }}
           sx={{
             padding: 2,
             borderRadius: "30px",

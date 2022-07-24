@@ -1,19 +1,15 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useAxios } from "../hooks/axioshook";
 import FoodCard from "./FoodCard";
 import Loading from "./Loading";
 
 const FoodList = () => {
+  const navigate = useNavigate();
   const { response, loading, error } = useAxios({
     method: "GET",
-    url: "/recipes-length/?limit=8",
+    url: "/recipes/1",
   });
 
   if (loading) {
@@ -25,7 +21,7 @@ const FoodList = () => {
   }
 
   if (error) {
-    console.log(error);
+    return <>eror ya</>;
   }
 
   return (
@@ -43,6 +39,9 @@ const FoodList = () => {
           For You
         </Typography>
         <Button
+          onClick={() => {
+            navigate("/");
+          }}
           variant="contained"
           color="secondary"
           sx={{

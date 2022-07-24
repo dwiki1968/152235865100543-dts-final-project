@@ -48,7 +48,7 @@ const Navbar = () => {
           border: "1px solid rgba(0, 0, 0, 0.1)",
         }}
       >
-        <Container maxWidth="xl">
+        <Container>
           <Toolbar disableGutters>
             <EggAltOutlinedIcon
               sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
