@@ -9,6 +9,7 @@ import Layout from "./components/Layout";
 import RecipeDetail from "./containers/RecipeDetail";
 import ScrollToTop from "./components/ScrollToTop";
 import NotFound from "./containers/NotFound";
+import Search from "./containers/Search";
 
 function App() {
   return (
@@ -34,6 +35,17 @@ function App() {
                   <>
                     <Layout>
                       <RecipeDetail />
+                    </Layout>
+                  </>
+                }
+              />
+
+              <Route
+                path="/search"
+                element={
+                  <>
+                    <Layout>
+                      <Search />
                     </Layout>
                   </>
                 }

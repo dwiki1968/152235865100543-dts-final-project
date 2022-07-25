@@ -12,11 +12,37 @@ import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
 
-const pages = ["Home", "Recipes", "Articles", "About"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const menus = [
+  {
+    menu: "Home",
+    page: "/",
+  },
+  {
+    menu: "Search",
+    page: "/search",
+  },
+  {
+    menu: "About",
+    page: "/about",
+  },
+];
+
+const settings = [
+  {
+    menu: "Profile",
+    page: "/profile",
+  },
+
+  {
+    menu: "Logout",
+    page: "/logout",
+  },
+];
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -56,14 +82,16 @@ const Navbar = () => {
             <Typography
               variant="h6"
               noWrap
-              component="a"
-              href="/"
+              component={Button}
+              onClick={() => {
+                navigate("/");
+              }}
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
                 fontWeight: 700,
                 color: "text",
-                textDecoration: "none",
+                textTransform: "none",
               }}
             >
               Resepku
@@ -98,9 +126,15 @@ const Navbar = () => {
                   display: { xs: "block", md: "none" },
                 }}
               >
-                {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
+                {menus.map((menu) => (
+                  <MenuItem
+                    key={menu.menu}
+                    onClick={() => {
+                      handleCloseNavMenu();
+                      navigate(menu.page);
+                    }}
+                  >
+                    <Typography textAlign="center">{menu.menu}</Typography>
                   </MenuItem>
                 ))}
               </Menu>
@@ -112,7 +146,9 @@ const Navbar = () => {
               variant="h5"
               noWrap
               component="a"
-              href=""
+              onClick={() => {
+                navigate("/");
+              }}
               sx={{
                 mr: 2,
                 display: { xs: "flex", md: "none" },
@@ -133,10 +169,13 @@ const Navbar = () => {
                 marginLeft: 8,
               }}
             >
-              {pages.map((page) => (
+              {menus.map((menu) => (
                 <Button
-                  key={page}
-                  onClick={handleCloseNavMenu}
+                  key={menu.menu}
+                  onClick={() => {
+                    handleCloseNavMenu();
+                    navigate(menu.page);
+                  }}
                   sx={{
                     my: 3,
                     display: "block",
@@ -144,7 +183,7 @@ const Navbar = () => {
                     fontWeight: "500",
                   }}
                 >
-                  {page}
+                  {menu.menu}
                 </Button>
               ))}
             </Box>
@@ -152,7 +191,10 @@ const Navbar = () => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Profile " src="/static/images/avatar/2.jpg" />
+                  <Avatar
+                    alt="Profile "
+                    src="https://i.pravatar.cc/150?img=68"
+                  />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -172,8 +214,14 @@ const Navbar = () => {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
+                  <MenuItem
+                    key={setting.menu}
+                    onClick={() => {
+                      handleCloseUserMenu();
+                      navigate(setting.page);
+                    }}
+                  >
+                    <Typography textAlign="center">{setting.menu}</Typography>
                   </MenuItem>
                 ))}
               </Menu>
