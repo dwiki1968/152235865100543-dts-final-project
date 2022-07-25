@@ -21,7 +21,7 @@ import OtherRecipes from "../components/OtherRecipes";
 
 const RecipeDetail = () => {
   let { recipeId } = useParams();
-  console.log(recipeId);
+
   const { response, loading, error } = useAxios(`/recipe/${recipeId}`);
 
   if (loading) {

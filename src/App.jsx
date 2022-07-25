@@ -7,6 +7,8 @@ import SignIn from "./containers/SignIn";
 import SignUp from "./containers/SignUp";
 import Layout from "./components/Layout";
 import RecipeDetail from "./containers/RecipeDetail";
+import ScrollToTop from "./components/ScrollToTop";
+import NotFound from "./containers/NotFound";
 
 function App() {
   return (
@@ -14,29 +16,31 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <BrowserRouter>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <Layout>
-                  <HomePage />
-                </Layout>
-              }
-            />
-            <Route path="signup" element={<SignUp />} />
-            <Route path="login" element={<SignIn />} />
-            <Route
-              path="/recipes/:recipeId"
-              element={
-                <>
+          <ScrollToTop>
+            <Routes>
+              <Route
+                path="/"
+                element={
                   <Layout>
-                    <RecipeDetail />
+                    <HomePage />
                   </Layout>
-                </>
-              }
-            />
-            <Route path="*" element={<>notfound</>} />
-          </Routes>
+                }
+              />
+              <Route path="signup" element={<SignUp />} />
+              <Route path="login" element={<SignIn />} />
+              <Route
+                path="/recipes/:recipeId"
+                element={
+                  <>
+                    <Layout>
+                      <RecipeDetail />
+                    </Layout>
+                  </>
+                }
+              />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </ScrollToTop>
         </BrowserRouter>
       </ThemeProvider>
     </>
