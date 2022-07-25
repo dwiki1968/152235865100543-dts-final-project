@@ -1,6 +1,8 @@
 import { useParams } from "react-router-dom";
 
 import {
+  Alert,
+  AlertTitle,
   Avatar,
   Box,
   Card,
@@ -33,7 +35,14 @@ const RecipeDetail = () => {
   }
 
   if (error) {
-    return <>eror ya</>;
+    return (
+      <>
+        <Alert severity="error">
+          <AlertTitle>Error</AlertTitle>
+          {error.message}
+        </Alert>
+      </>
+    );
   }
 
   const { author, desc, ingredient, servings, step, thumb, times, title } =

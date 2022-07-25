@@ -1,7 +1,5 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-
-axios.defaults.baseURL = "https://masak-apa-tomorisakura.vercel.app/api";
+import { useEffect, useState } from "react";
+import recipesInstance from "../apis/recipesInstance";
 
 export const useAxios = (url) => {
   const [response, setResponse] = useState(null);
@@ -10,7 +8,7 @@ export const useAxios = (url) => {
 
   const fetchData = async (params) => {
     try {
-      const result = await axios.get(params);
+      const result = await recipesInstance.get(params);
       setResponse(result.data);
     } catch (error) {
       setError(error);

@@ -1,5 +1,7 @@
 import { Restaurant } from "@mui/icons-material";
 import {
+  Alert,
+  AlertTitle,
   Card,
   CardActionArea,
   CardMedia,
@@ -26,7 +28,14 @@ const OtherRecipes = () => {
   }
 
   if (error) {
-    return <>eror ya</>;
+    return (
+      <>
+        <Alert severity="error">
+          <AlertTitle>Error</AlertTitle>
+          {error.message}
+        </Alert>
+      </>
+    );
   }
 
   return (

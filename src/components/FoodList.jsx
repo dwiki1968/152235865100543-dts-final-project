@@ -1,4 +1,11 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
+import {
+  Alert,
+  AlertTitle,
+  Box,
+  Button,
+  Stack,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import { useAxios } from "../hooks/axioshook";
 import FoodCard from "./FoodCard";
@@ -22,7 +29,12 @@ const FoodList = () => {
   }
 
   if (error) {
-    return <>eror ya</>;
+    return (
+      <Alert severity="error">
+        <AlertTitle>Error</AlertTitle>
+        {error.message}
+      </Alert>
+    );
   }
 
   return (

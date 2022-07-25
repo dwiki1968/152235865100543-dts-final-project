@@ -10,6 +10,7 @@ import RecipeDetail from "./containers/RecipeDetail";
 import ScrollToTop from "./components/ScrollToTop";
 import NotFound from "./containers/NotFound";
 import Search from "./containers/Search";
+import About from "./containers/About";
 
 function App() {
   return (
@@ -46,6 +47,16 @@ function App() {
                   <>
                     <Layout>
                       <Search />
+                    </Layout>
+                  </>
+                }
+              />
+              <Route
+                path="/about"
+                element={
+                  <>
+                    <Layout>
+                      <About />
                     </Layout>
                   </>
                 }
