@@ -1,5 +1,7 @@
 import { PlayCircleFilled, Restaurant, Timer } from "@mui/icons-material";
 import {
+  Alert,
+  AlertTitle,
   Box,
   Button,
   Card,
@@ -11,8 +13,28 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
+import { useAxios } from "../hooks/axioshook";
+import { useNavigate } from "react-router-dom";
 
 const HeroBanner = () => {
+  const navigate = useNavigate();
+  const { response, loading, error } = useAxios("/recipes-length/?limit=1");
+
+  if (loading) {
+    return <></>;
+  }
+
+  if (error) {
+    return (
+      <Alert severity="error">
+        <AlertTitle>Error</AlertTitle>
+        {error.message}
+      </Alert>
+    );
+  }
+
+  console.log(response.results);
+  const { title, key, portion, thumb, times } = response.results[0];
   return (
     <>
       <Card
@@ -21,24 +43,22 @@ const HeroBanner = () => {
           boxShadow: "none",
           background: "#E7FAFE",
           borderRadius: "30px",
-          minHeight: "500px",
+          // minHeight: "500px",
           display: "flex",
         }}
       >
         <Box sx={{ display: "flex", flexDirection: "column", padding: 5 }}>
           <CardContent sx={{ flex: "1 0 auto" }}>
             <Stack spacing={3}>
-              <Typography variant="h2" fontWeight="600">
-                Spicy delicious chicken wings
+              <Typography variant="h3" fontWeight="600">
+                {title.replace("Resep", "").split(",")[0]}
               </Typography>
               <Typography variant="subtitle1" color="text.secondary">
-                Lorem ipsum dolor sit amet, consectetuipisicing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqut enim
-                ad minim
+                {title.replace("Resep", "").split(",")[1]}
               </Typography>
               <Stack direction="row" spacing={2}>
-                <Chip icon={<Timer />} label="1 Jam" />
-                <Chip icon={<Restaurant />} label="8 Porsi" />
+                <Chip icon={<Timer />} label={times} />
+                <Chip icon={<Restaurant />} label={portion} />
               </Stack>
             </Stack>
           </CardContent>
@@ -49,14 +69,13 @@ const HeroBanner = () => {
               justifyContent="space-between"
               alignItems="center"
             >
-              <Box>
-                <Typography fontWeight="700">Dwiki Krisna</Typography>
-                <Typography fontWeight="500">15 March 2022</Typography>
-              </Box>
               <Button
                 variant="contained"
                 sx={{ height: "60px", textTransform: "none", paddingX: 5 }}
                 endIcon={<PlayCircleFilled />}
+                onClick={() => {
+                  navigate(`recipes/${key}`);
+                }}
               >
                 View Recipes
               </Button>
@@ -66,8 +85,8 @@ const HeroBanner = () => {
         <CardMedia
           component="img"
           sx={{ width: "50%" }}
-          image="https://www.masakapahariini.com/wp-content/uploads/2022/03/salted-egg-chicken-752x440.jpg"
-          alt="Live from space album cover"
+          image={thumb}
+          alt={key}
         />
       </Card>
     </>
