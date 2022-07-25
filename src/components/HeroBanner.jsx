@@ -15,6 +15,7 @@ import {
 import React from "react";
 import { useAxios } from "../hooks/axioshook";
 import { useNavigate } from "react-router-dom";
+import { Container } from "@mui/system";
 
 const HeroBanner = () => {
   const navigate = useNavigate();
@@ -26,14 +27,20 @@ const HeroBanner = () => {
 
   if (error) {
     return (
-      <Alert severity="error">
-        <AlertTitle>Error</AlertTitle>
-        {error.message}
-      </Alert>
+      <Container
+        sx={{
+          paddingY: 5,
+        }}
+      >
+        <Alert severity="error">
+          <AlertTitle>Error</AlertTitle>
+          {error.message}
+        </Alert>
+      </Container>
     );
   }
 
-  console.log(response.results);
+  // console.log(response.results);
   const { title, key, portion, thumb, times } = response.results[0];
   return (
     <>

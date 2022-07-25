@@ -61,9 +61,9 @@ const RecipeDetail = () => {
 
         {/* Sekilas Info */}
         <Stack
-          direction="row"
+          direction={{ xs: "column", sm: "row" }}
           divider={<Divider orientation="vertical" flexItem />}
-          spacing={5}
+          spacing={2}
         >
           <Info
             icon={<Avatar alt={author.user} src="https://i.pravatar.cc/100" />}
@@ -76,26 +76,26 @@ const RecipeDetail = () => {
         </Stack>
 
         {/* Thumb  */}
-        <Grid container>
-          <Grid item xs={8}>
-            <Card
-              sx={{
-                // maxWidth: "600px",
-                boxShadow: "none",
-                borderRadius: "30px",
-                paddingRight: 5,
-              }}
-            >
-              <CardMedia
-                sx={{
-                  borderRadius: "30px",
-                }}
-                component="img"
-                image={thumb}
-                alt="resep-sate-kambing-bumbu-kacang-kurma"
-              />
-            </Card>
-          </Grid>
+        {/* <Grid container>
+          <Grid item xs={8}> */}
+        <Card
+          sx={{
+            maxWidth: "600px",
+            boxShadow: "none",
+            borderRadius: "30px",
+            paddingRight: 5,
+          }}
+        >
+          <CardMedia
+            sx={{
+              borderRadius: "30px",
+            }}
+            component="img"
+            image={thumb}
+            alt="resep-sate-kambing-bumbu-kacang-kurma"
+          />
+        </Card>
+        {/* </Grid>
           <Grid item xs={4}>
             <Card
               sx={{
@@ -106,7 +106,7 @@ const RecipeDetail = () => {
               }}
             ></Card>
           </Grid>
-        </Grid>
+        </Grid> */}
 
         <Box>
           <Typography
@@ -121,7 +121,15 @@ const RecipeDetail = () => {
 
         {/* Bahan  */}
         <Grid container>
-          <Grid item xs={8}>
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            md={8}
+            sx={{
+              marginBottom: 5,
+            }}
+          >
             <Box
               sx={{
                 paddingRight: 5,
@@ -159,7 +167,7 @@ const RecipeDetail = () => {
               </Box>
             </Box>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <Typography
               fontWeight={600}
               variant="h4"
