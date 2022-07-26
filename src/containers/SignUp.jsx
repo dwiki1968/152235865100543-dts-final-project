@@ -8,18 +8,40 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import * as React from "react";
+import { useEffect, useState } from "react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../config/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { Alert } from "@mui/material";
 
 export default function SignUp() {
   const navigate = useNavigate();
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const email = data.get("email");
+    const password = data.get("password");
+    try {
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      console.log(
+        "User yang teregistrasi dan berhasil login adalah",
+        response.user
+      );
+    } catch (err) {
+      setErrorMsg(
+        err.message
+          .replace(/-/g, " ")
+          .replace(/Firebase:/g, "")
+          .replace("auth/", "")
+      );
+    }
   };
 
   return (
@@ -44,27 +66,6 @@ export default function SignUp() {
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="given-name"
-                name="firstName"
-                required
-                fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="family-name"
-              />
-            </Grid>
             <Grid item xs={12}>
               <TextField
                 required
@@ -108,6 +109,16 @@ export default function SignUp() {
               </Link>
             </Grid>
           </Grid>
+          {errorMsg && (
+            <Alert
+              sx={{
+                marginTop: 5,
+              }}
+              severity="error"
+            >
+              {errorMsg}
+            </Alert>
+          )}
         </Box>
       </Box>
     </Container>

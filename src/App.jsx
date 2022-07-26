@@ -11,6 +11,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import NotFound from "./containers/NotFound";
 import Search from "./containers/Search";
 import About from "./containers/About";
+import RouteGuard from "./components/RouteGuard";
 
 function App() {
   return (
@@ -34,9 +35,11 @@ function App() {
                 path="/recipes/:recipeId"
                 element={
                   <>
-                    <Layout>
-                      <RecipeDetail />
-                    </Layout>
+                    <RouteGuard>
+                      <Layout>
+                        <RecipeDetail />
+                      </Layout>
+                    </RouteGuard>
                   </>
                 }
               />
@@ -46,7 +49,9 @@ function App() {
                 element={
                   <>
                     <Layout>
-                      <Search />
+                      <RouteGuard>
+                        <Search />
+                      </RouteGuard>
                     </Layout>
                   </>
                 }

@@ -32,7 +32,7 @@ const Search = () => {
   };
 
   const handleSubmit = () => {
-    if (qwery == "") {
+    if (qwery === "") {
       // console.log("kosong");
       setError({ message: "Isi kata kunci terlebih dahulu!." });
     } else {
