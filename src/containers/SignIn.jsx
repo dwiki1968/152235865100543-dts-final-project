@@ -11,11 +11,20 @@ import Typography from "@mui/material/Typography";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../config/firebase";
 import { Alert } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import Loading from "../components/Loading";
 
 export default function SignIn() {
   const navigate = useNavigate();
+  const [user, isLoading, error] = useAuthState(auth);
   const [errorMsg, setErrorMsg] = useState("");
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -24,7 +33,6 @@ export default function SignIn() {
     const password = data.get("password");
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
-
       console.log(
         "User yang teregistrasi dan berhasil login adalah",
         response.user
@@ -38,6 +46,10 @@ export default function SignIn() {
       );
     }
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <Container sx={{}} component="main" maxWidth="xs">

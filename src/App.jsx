@@ -12,6 +12,7 @@ import NotFound from "./containers/NotFound";
 import Search from "./containers/Search";
 import About from "./containers/About";
 import RouteGuard from "./components/RouteGuard";
+import Profile from "./containers/Profile";
 
 function App() {
   return (
@@ -48,11 +49,11 @@ function App() {
                 path="/search"
                 element={
                   <>
-                    <Layout>
-                      <RouteGuard>
+                    <RouteGuard>
+                      <Layout>
                         <Search />
-                      </RouteGuard>
-                    </Layout>
+                      </Layout>
+                    </RouteGuard>
                   </>
                 }
               />
@@ -66,6 +67,18 @@ function App() {
                   </>
                 }
               />
+
+              <Route
+                path="/profile"
+                element={
+                  <>
+                    <Layout>
+                      <Profile />
+                    </Layout>
+                  </>
+                }
+              />
+
               <Route path="*" element={<NotFound />} />
             </Routes>
           </ScrollToTop>

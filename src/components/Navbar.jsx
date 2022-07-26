@@ -13,6 +13,10 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth } from "../config/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { Login } from "@mui/icons-material";
 
 const menus = [
   {
@@ -34,17 +38,23 @@ const settings = [
     menu: "Profile",
     page: "/profile",
   },
-
-  {
-    menu: "Logout",
-    page: "/logout",
-  },
 ];
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [user, isLoading] = useAuthState(auth);
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      console.log("berhasil log out");
+    } catch (err) {
+      console.log(err);
+      console.log("gagal log out");
+    }
+  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -189,14 +199,30 @@ const Navbar = () => {
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar
-                    alt="Profile "
-                    src="https://i.pravatar.cc/150?img=68"
-                  />
-                </IconButton>
-              </Tooltip>
+              {!user ? (
+                <Button
+                  onClick={() => {
+                    navigate("/login");
+                  }}
+                  sx={{
+                    textTransform: "none",
+                    fontWeight: "500",
+                  }}
+                  endIcon={<Login />}
+                >
+                  Login
+                </Button>
+              ) : (
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar
+                      alt="Profile "
+                      src="https://i.pravatar.cc/150?img=68"
+                    />
+                  </IconButton>
+                </Tooltip>
+              )}
+
               <Menu
                 sx={{ mt: "45px" }}
                 id="menu-appbar"
@@ -213,6 +239,12 @@ const Navbar = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
+                {user && (
+                  <MenuItem>
+                    <Typography> {user.email}</Typography>
+                  </MenuItem>
+                )}
+
                 {settings.map((setting) => (
                   <MenuItem
                     key={setting.menu}
@@ -224,6 +256,15 @@ const Navbar = () => {
                     <Typography textAlign="center">{setting.menu}</Typography>
                   </MenuItem>
                 ))}
+
+                <MenuItem
+                  onClick={() => {
+                    handleCloseUserMenu();
+                    handleSignOut();
+                  }}
+                >
+                  <Typography textAlign="center">Logout</Typography>
+                </MenuItem>
               </Menu>
             </Box>
           </Toolbar>

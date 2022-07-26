@@ -13,10 +13,18 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../config/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Alert } from "@mui/material";
+import Loading from "../components/Loading";
 
 export default function SignUp() {
   const navigate = useNavigate();
+  const [user, isLoading, error] = useAuthState(auth);
   const [errorMsg, setErrorMsg] = useState("");
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -43,6 +51,10 @@ export default function SignUp() {
       );
     }
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <Container component="main" maxWidth="xs">
