@@ -8,7 +8,7 @@ const Loading = () => {
       <Box
         sx={{
           display: "flex",
-          minHeight: "100px",
+          height: "200px",
           alignItems: "center",
           justifyContent: "center",
         }}

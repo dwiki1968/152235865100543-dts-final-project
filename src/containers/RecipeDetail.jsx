@@ -5,11 +5,13 @@ import {
   AlertTitle,
   Avatar,
   Box,
+  Button,
   Card,
   CardMedia,
   Container,
   Divider,
   Grid,
+  IconButton,
   Stack,
   Typography,
 } from "@mui/material";
@@ -17,7 +19,7 @@ import React from "react";
 import Loading from "../components/Loading";
 import { useAxios } from "../hooks/axioshook";
 import Info from "../components/Info";
-import { Restaurant, Timer } from "@mui/icons-material";
+import { Print, PrintOutlined, Restaurant, Timer } from "@mui/icons-material";
 import ListForDetailRecipe from "../components/ListForDetailRecipe";
 import OtherRecipes from "../components/OtherRecipes";
 
@@ -55,15 +57,42 @@ const RecipeDetail = () => {
     >
       <Stack spacing={5}>
         {/* Judul Resep */}
-        <Typography variant="h3" fontWeight={600}>
-          {title}
-        </Typography>
-
+        <Stack direction="row" justifyContent="space-between">
+          <Box
+            sx={{
+              maxWidth: "840px",
+            }}
+          >
+            <Typography variant="h3" fontWeight={600}>
+              {title}
+            </Typography>
+          </Box>
+          <Box>
+            <IconButton
+              sx={{
+                height: "80px",
+                width: "80px",
+                background: "#E7FAFE",
+              }}
+            >
+              <PrintOutlined />
+            </IconButton>
+            <Typography
+              sx={{ marginTop: 1 }}
+              variant="body2"
+              textAlign="center"
+              fontWeight={500}
+              fontSize="14px"
+            >
+              PRINT
+            </Typography>
+          </Box>
+        </Stack>
         {/* Sekilas Info */}
         <Stack
           direction={{ xs: "column", sm: "row" }}
           divider={<Divider orientation="vertical" flexItem />}
-          spacing={2}
+          spacing={4}
         >
           <Info
             icon={<Avatar alt={author.user} src="https://i.pravatar.cc/100" />}
@@ -75,15 +104,12 @@ const RecipeDetail = () => {
           <Info icon={<Restaurant />} title="Portion" content={servings} />
         </Stack>
 
-        {/* Thumb  */}
-        {/* <Grid container>
-          <Grid item xs={8}> */}
         <Card
           sx={{
-            maxWidth: "600px",
+            // maxWidth: "840px",
             boxShadow: "none",
             borderRadius: "30px",
-            paddingRight: 5,
+            // maxHeight: "500px",
           }}
         >
           <CardMedia
@@ -92,21 +118,9 @@ const RecipeDetail = () => {
             }}
             component="img"
             image={thumb}
-            alt="resep-sate-kambing-bumbu-kacang-kurma"
+            alt={title}
           />
         </Card>
-        {/* </Grid>
-          <Grid item xs={4}>
-            <Card
-              sx={{
-                background: "#E7FAFE",
-                height: "100%",
-                borderRadius: "30px",
-                boxShadow: "none",
-              }}
-            ></Card>
-          </Grid>
-        </Grid> */}
 
         <Box>
           <Typography

@@ -11,6 +11,8 @@ import ScrollToTop from "./components/ScrollToTop";
 import NotFound from "./containers/NotFound";
 import Search from "./containers/Search";
 import About from "./containers/About";
+import RouteGuard from "./components/RouteGuard";
+import Profile from "./containers/Profile";
 
 function App() {
   return (
@@ -34,9 +36,11 @@ function App() {
                 path="/recipes/:recipeId"
                 element={
                   <>
-                    <Layout>
-                      <RecipeDetail />
-                    </Layout>
+                    <RouteGuard>
+                      <Layout>
+                        <RecipeDetail />
+                      </Layout>
+                    </RouteGuard>
                   </>
                 }
               />
@@ -45,9 +49,11 @@ function App() {
                 path="/search"
                 element={
                   <>
-                    <Layout>
-                      <Search />
-                    </Layout>
+                    <RouteGuard>
+                      <Layout>
+                        <Search />
+                      </Layout>
+                    </RouteGuard>
                   </>
                 }
               />
@@ -61,6 +67,18 @@ function App() {
                   </>
                 }
               />
+
+              <Route
+                path="/profile"
+                element={
+                  <>
+                    <Layout>
+                      <Profile />
+                    </Layout>
+                  </>
+                }
+              />
+
               <Route path="*" element={<NotFound />} />
             </Routes>
           </ScrollToTop>

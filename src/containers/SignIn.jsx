@@ -8,19 +8,48 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import * as React from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../config/firebase";
+import { Alert } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import Loading from "../components/Loading";
 
 export default function SignIn() {
   const navigate = useNavigate();
+  const [user, isLoading, error] = useAuthState(auth);
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const handleSubmit = (event) => {
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const email = data.get("email");
+    const password = data.get("password");
+    try {
+      const response = await signInWithEmailAndPassword(auth, email, password);
+      console.log(
+        "User yang teregistrasi dan berhasil login adalah",
+        response.user
+      );
+    } catch (err) {
+      setErrorMsg(
+        err.message
+          .replace(/-/g, " ")
+          .replace(/Firebase:/g, "")
+          .replace("auth/", "")
+      );
+    }
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <Container sx={{}} component="main" maxWidth="xs">
@@ -85,6 +114,16 @@ export default function SignIn() {
               </Link>
             </Grid>
           </Grid>
+          {errorMsg && (
+            <Alert
+              sx={{
+                marginTop: 5,
+              }}
+              severity="error"
+            >
+              {errorMsg}
+            </Alert>
+          )}
         </Box>
       </Box>
     </Container>

@@ -20,11 +20,17 @@ const Search = () => {
   const [loading, setloading] = useState(false);
 
   const fetchData = async (params) => {
+    setError("");
     setloading(true);
     try {
       const result = await recipesInstance.get(params);
       setResponse(result.data.results);
       setloading(false);
+      if (result.data.results.length == 0) {
+        setError({
+          message: "Sayang sekali, data yang anda cari tidak ditemukan.",
+        });
+      }
     } catch (error) {
       setError(error);
       setloading(false);
@@ -32,8 +38,7 @@ const Search = () => {
   };
 
   const handleSubmit = () => {
-    if (qwery == "") {
-      // console.log("kosong");
+    if (qwery === "") {
       setError({ message: "Isi kata kunci terlebih dahulu!." });
     } else {
       fetchData(`/search/?q=${qwery}`);
