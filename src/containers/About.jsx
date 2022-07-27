@@ -28,7 +28,9 @@ const About = () => {
               Kunjungi github kami di{" "}
               <Link href="https://github.com/dwiki1968">@dwiki1968</Link>
             </Typography>
-            <Typography>Special Thanks to 😘: </Typography>
+            <Typography>
+              <strong>Special Thanks to 😘: </strong>
+            </Typography>
             <Typography>
               API Provider --{" "}
               <Link href="https://github.com/tomorisakura/unofficial-masakapahariini-api">
