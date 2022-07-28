@@ -26,7 +26,7 @@ const Search = () => {
       const result = await recipesInstance.get(params);
       setResponse(result.data.results);
       setloading(false);
-      if (result.data.results.length == 0) {
+      if (result.data.results.length === 0) {
         setError({
           message: "Sayang sekali, data yang anda cari tidak ditemukan.",
         });

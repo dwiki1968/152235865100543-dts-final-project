@@ -44,7 +44,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [user, isLoading] = useAuthState(auth);
+  const [user] = useAuthState(auth);
 
   const handleSignOut = async () => {
     try {

@@ -17,7 +17,7 @@ import Loading from "../components/Loading";
 
 export default function SignIn() {
   const navigate = useNavigate();
-  const [user, isLoading, error] = useAuthState(auth);
+  const [user, isLoading] = useAuthState(auth);
   const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {

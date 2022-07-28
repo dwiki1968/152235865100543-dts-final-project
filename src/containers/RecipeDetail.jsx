@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom";
 
+import { PrintOutlined, Restaurant, Timer } from "@mui/icons-material";
 import {
   Alert,
   AlertTitle,
   Avatar,
   Box,
-  Button,
   Card,
   CardMedia,
   Container,
@@ -15,18 +15,22 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React from "react";
-import Loading from "../components/Loading";
-import { useAxios } from "../hooks/axioshook";
+import React, { useRef } from "react";
 import Info from "../components/Info";
-import { Print, PrintOutlined, Restaurant, Timer } from "@mui/icons-material";
 import ListForDetailRecipe from "../components/ListForDetailRecipe";
+import Loading from "../components/Loading";
 import OtherRecipes from "../components/OtherRecipes";
+import { useAxios } from "../hooks/axioshook";
+import RecipeToPrint from "../components/RecipeToPrint";
+import { useReactToPrint } from "react-to-print";
 
 const RecipeDetail = () => {
   let { recipeId } = useParams();
-
+  const componentRef = useRef();
   const { response, loading, error } = useAxios(`/recipe/${recipeId}`);
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
 
   if (loading) {
     return (
@@ -49,6 +53,7 @@ const RecipeDetail = () => {
 
   const { author, desc, ingredient, servings, step, thumb, times, title } =
     response.results;
+
   return (
     <Container
       sx={{
@@ -69,6 +74,7 @@ const RecipeDetail = () => {
           </Box>
           <Box>
             <IconButton
+              onClick={handlePrint}
               sx={{
                 height: "80px",
                 width: "80px",
@@ -106,10 +112,10 @@ const RecipeDetail = () => {
 
         <Card
           sx={{
-            // maxWidth: "840px",
+            maxWidth: "780px",
             boxShadow: "none",
             borderRadius: "30px",
-            // maxHeight: "500px",
+            maxHeight: "440px",
           }}
         >
           <CardMedia
@@ -195,6 +201,15 @@ const RecipeDetail = () => {
           </Grid>
         </Grid>
       </Stack>
+      <Box
+        sx={{
+          display: "none",
+        }}
+      >
+        <Box ref={componentRef}>
+          <RecipeToPrint data={response.results} />
+        </Box>
+      </Box>
     </Container>
   );
 };
